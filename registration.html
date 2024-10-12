@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Page</title>
+  <style>
+    /* Style for the body: Sets the background image, covers the entire view, centers content */
+    body {
+      background-image: url('https://img.freepik.com/premium-vector/vingerafdruk-netwerk-cyber-security-achtergrond_42077-10181.jpg');
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Style for the container: White background, padding, rounded borders, shadow, and specific width */
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    /* Style for the logo: Centers the logo image within its container */
+    .logo {
+      background-image: url('https://i.imgur.com/BTG8XX6.png'); /* De directe URL van je logo */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 100px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo container -->
+    <div class="logo"></div>
+
+    <!-- Page Title -->
+    <h1>Registration Page</h1>
+
+    <!-- Registration Form -->
+    <form id="registration-form">
+      <label for="new-email">Email:</label><br>
+      <input type="email" id="new-email" name="email" required><br>
+      <label for="new-pwd">Password:</label><br>
+      <input type="password" id="new-pwd" name="password" required><br><br>
+      <input type="button" value="Register" onclick="registerUser()">
+    </form>
+
+    <!-- Link to Login Page -->
+    <p>Existing user? <a href="#" onclick="loadLogin()">Click here</a></p>
+
+    <!-- Scripts for handling registration and loading the login page -->
+    <script>
+      // Function to handle user registration
+      function registerUser() {
+        var email = document.getElementById('new-email').value;
+        var password = document.getElementById('new-pwd').value;
+        // Calls the server-side function to register the new user
+        google.script.run.withSuccessHandler(function(){
+            loadLogin(); // Redirects to login page after successful registration
+        }).registerNewUser(email, password);
+      }
+
+      // Function to load the login page
+      function loadLogin() {
+        // Calls the server-side function to retrieve the login page content
+        google.script.run.withSuccessHandler(function(html) {
+          document.open();
+          document.write(html);
+          document.close();
+        }).getLoginPage();
+      }
+    </script>
+  </div>
+</body>
+</html>

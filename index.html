@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login Page</title>
+  <style>
+    /* Style for the body: Sets the background image, covers the entire view, centers content */
+    body {
+      background-image: url('https://img.freepik.com/premium-vector/vingerafdruk-netwerk-cyber-security-achtergrond_42077-10181.jpg');
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Style for the container: White background, padding, rounded borders, shadow, and specific width */
+    .container {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    /* Style for the logo: Centers the logo image within its container */
+    .logo {
+      background-image: url('https://i.imgur.com/BTG8XX6.png'); /* De directe URL van je logo */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 100px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo container -->
+    <div class="logo"></div>
+
+    <!-- Page Title -->
+    <h1>Login Page</h1>
+
+    <!-- Login Form -->
+    <form id="login-form">
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br>
+      <label for="pwd">Password:</label><br>
+      <input type="password" id="pwd" name="password" required><br><br>
+      <input type="button" value="Submit" onclick="validateLogin()">
+    </form>
+
+    <!-- Link to Registration Page -->
+    <p>New user? <a href="#" onclick="loadRegistration()">Click here</a></p>
+
+    <!-- Scripts for handling login and loading the registration page -->
+    <script>
+      // Function to validate login credentials
+      function validateLogin() {
+        google.script.run.withSuccessHandler(function(response) {
+          if(response) {
+            // Redirects to the menu page if login is successful
+            google.script.run.withSuccessHandler(function(html) {
+              document.open();
+              document.write(html);
+              document.close();
+            }).getMenuPage();
+          } else {
+            // Shows an alert if credentials are invalid
+            window.alert('Invalid Credentials');
+          }
+        }).checkLogin(document.getElementById('email').value, document.getElementById('pwd').value);
+      }
+
+      // Function to load the registration page
+      function loadRegistration() {
+        google.script.run.withSuccessHandler(function(html) {
+          document.open();
+          document.write(html);
+          document.close();
+        }).getRegistrationPage();
+      }
+    </script>
+  </div>
+</body>
+</html>
